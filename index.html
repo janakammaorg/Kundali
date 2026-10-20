@@ -32,6 +32,25 @@
         ctx.moveTo(0, 300); ctx.lineTo(300, 0);
         ctx.stroke();
 
+        // 1 to 12 House Numbers (Gold Color) - Added elegantly at corners
+        ctx.fillStyle = "#fbbf24"; // Gold color
+        ctx.font = "bold 16px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText("1", 300, 60);   // Top Diamond
+        ctx.fillText("2", 120, 40);   // Top Left Triangle
+        ctx.fillText("3", 40, 120);   // Mid Left Outer Triangle
+        ctx.fillText("4", 60, 300);   // Left Diamond
+        ctx.fillText("5", 40, 480);   // Mid Left Bottom Triangle
+        ctx.fillText("6", 120, 560);  // Bottom Left Triangle
+        ctx.fillText("7", 300, 540);  // Bottom Diamond
+        ctx.fillText("8", 480, 560);  // Bottom Right Triangle
+        ctx.fillText("9", 560, 480);  // Mid Right Bottom Triangle
+        ctx.fillText("10", 540, 300); // Right Diamond
+        ctx.fillText("11", 560, 120); // Mid Right Top Triangle
+        ctx.fillText("12", 480, 40);  // Top Right Triangle
+
         // మీ ఒరిజినల్ గ్రహాల ఇమేజ్ లింక్స్ మరియు వాటి పర్ఫెక్ట్ సెంటర్ స్థానాలు (X, Y)
         const planets = [
             { url: 'https://i.ibb.co/cKFT5BQ8/surya-png.png', x: 300, y: 150 }, // 1వ ఇల్లు
@@ -45,7 +64,7 @@
             { url: 'https://i.ibb.co/GvzdFxD3/ketu-png.png', x: 450, y: 75 }      // 12వ ఇల్లు
         ];
 
-        const iconSize = 70; // సైజు పెంచాను
+        const iconSize = 70;
 
         // Drawing original planet images perfectly centered
         planets.forEach(p => {
@@ -53,7 +72,6 @@
             img.crossOrigin = "Anonymous"; 
             img.src = p.url;
             img.onload = function() {
-                // సెంటర్‌లో సరిగ్గా కూర్చోవడానికి సైజు/2 మైనస్ చేశాను
                 ctx.drawImage(img, p.x - (iconSize / 2), p.y - (iconSize / 2), iconSize, iconSize); 
             }
         });
