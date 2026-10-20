@@ -15,11 +15,6 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const userName = urlParams.get('name') ? decodeURIComponent(urlParams.get('name')) : 'BURIDI VIKASH RAJU';
-        const userDob = urlParams.get('dob') ? decodeURIComponent(urlParams.get('dob')) : '12-03-2003';
-        const userTime = urlParams.get('time') ? decodeURIComponent(urlParams.get('time')) : '10:30 AM';
-
         const canvas = document.getElementById('kundaliCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -37,41 +32,29 @@
         ctx.moveTo(0, 300); ctx.lineTo(300, 0);
         ctx.stroke();
 
-        // Center User Name and Details Box
-        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-        ctx.fillRect(120, 230, 360, 120);
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(120, 230, 360, 120);
-
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(userName, 300, 270);
-        ctx.fillStyle = "#fbbf24";
-        ctx.font = "bold 14px Arial";
-        ctx.fillText("DOB: " + userDob + "   TIME: " + userTime, 300, 315);
-
-        // మీ ఒరిజినల్ గ్రహాల ఇమేజ్ లింక్స్ (Navagraha Images)
+        // మీ ఒరిజినల్ గ్రహాల ఇమేజ్ లింక్స్ మరియు వాటి పర్ఫెక్ట్ సెంటర్ స్థానాలు (X, Y)
         const planets = [
-            { url: 'https://i.ibb.co/cKFT5BQ8/surya-png.png', x: 300, y: 90 }, // సూర్యుడు
-            { url: 'https://i.ibb.co/svSx8jxW/chandra-png.png', x: 150, y: 75 }, // చంద్రుడు
-            { url: 'https://i.ibb.co/S4kmV6sc/mangala.png', x: 450, y: 75 }, // కుజుడు (మంగళ)
-            { url: 'https://i.ibb.co/84dXYS0Q/budha-png.png', x: 530, y: 180 }, // బుధుడు
-            { url: 'https://i.ibb.co/TqPBxK7Z/guru-png.png', x: 75, y: 230 }, // గురు
-            { url: 'https://i.ibb.co/NgxgvdXf/shukra-png.png', x: 530, y: 420 }, // శుక్ర
-            { url: 'https://i.ibb.co/v4vSwZJS/shani.png', x: 75, y: 480 }, // శని
-            { url: 'https://i.ibb.co/23XjGRqH/rahu-png.png', x: 300, y: 525 }, // రాహు
-            { url: 'https://i.ibb.co/GvzdFxD3/ketu-png.png', x: 450, y: 525 } // కేతు
+            { url: 'https://i.ibb.co/cKFT5BQ8/surya-png.png', x: 300, y: 150 }, // 1వ ఇల్లు
+            { url: 'https://i.ibb.co/svSx8jxW/chandra-png.png', x: 150, y: 75 },  // 2వ ఇల్లు
+            { url: 'https://i.ibb.co/S4kmV6sc/mangala.png', x: 150, y: 300 },   // 4వ ఇల్లు
+            { url: 'https://i.ibb.co/84dXYS0Q/budha-png.png', x: 75, y: 450 },    // 5వ ఇల్లు
+            { url: 'https://i.ibb.co/TqPBxK7Z/guru-png.png', x: 300, y: 450 },   // 7వ ఇల్లు
+            { url: 'https://i.ibb.co/NgxgvdXf/shukra-png.png', x: 450, y: 525 },  // 8వ ఇల్లు
+            { url: 'https://i.ibb.co/v4vSwZJS/shani.png', x: 450, y: 300 },      // 10వ ఇల్లు
+            { url: 'https://i.ibb.co/23XjGRqH/rahu-png.png', x: 525, y: 150 },    // 11వ ఇల్లు
+            { url: 'https://i.ibb.co/GvzdFxD3/ketu-png.png', x: 450, y: 75 }      // 12వ ఇల్లు
         ];
 
-        // Drawing original planet images on the canvas
+        const iconSize = 70; // సైజు పెంచాను
+
+        // Drawing original planet images perfectly centered
         planets.forEach(p => {
             let img = new Image();
             img.crossOrigin = "Anonymous"; 
             img.src = p.url;
             img.onload = function() {
-                ctx.drawImage(img, p.x - 22, p.y - 22, 45, 45); // 45x45 Size of planets
+                // సెంటర్‌లో సరిగ్గా కూర్చోవడానికి సైజు/2 మైనస్ చేశాను
+                ctx.drawImage(img, p.x - (iconSize / 2), p.y - (iconSize / 2), iconSize, iconSize); 
             }
         });
     </script>
