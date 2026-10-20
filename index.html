@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ananda Guru - Kundali Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b0f19;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        #chartContainer {
+            width: 600px;
+            height: 600px;
+            background: #111827;
+            border: 3px solid #d97706;
+            position: relative;
+            box-sizing: border-box;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chartContainer">
+        <canvas id="kundaliCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name') || 'DEVOTEE';
+        const userDob = urlParams.get('dob') || '12-03-2003';
+        const userTime = urlParams.get('time') || '10:30 AM';
+
+        const canvas = document.getElementById('kundaliCanvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(0, 0, 600, 600);
+
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(10, 10, 580, 580);
+
+        ctx.beginPath();
+        ctx.moveTo(10, 10); ctx.lineTo(590, 590);
+        ctx.moveTo(590, 10); ctx.lineTo(10, 590);
+        
+        ctx.moveTo(300, 10); ctx.lineTo(590, 300);
+        ctx.moveTo(590, 300); ctx.lineTo(300, 590);
+        ctx.moveTo(300, 590); ctx.lineTo(10, 300);
+        ctx.moveTo(10, 300); ctx.lineTo(300, 10);
+        
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = "#fbbf24";
+        ctx.font = "bold 18px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        
+        ctx.fillText("1", 300, 120);
+        ctx.fillText("2", 120, 75);
+        ctx.fillText("3", 75, 120);
+        ctx.fillText("4", 200, 300);
+        ctx.fillText("5", 75, 480);
+        ctx.fillText("6", 120, 525);
+        ctx.fillText("7", 300, 480);
+        ctx.fillText("8", 480, 525);
+        ctx.fillText("9", 525, 480);
+        ctx.fillText("10", 400, 300);
+        ctx.fillText("11", 525, 120);
+        ctx.fillText("12", 480, 75);
+
+        ctx.fillStyle = "rgba(15, 23, 42, 0.95)";
+        ctx.fillRect(170, 235, 260, 130);
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(170, 235, 260, 130);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 16px Arial";
+        ctx.fillText(userName, 300, 270);
+
+        ctx.fillStyle = "#38bdf8";
+        ctx.font = "14px Arial";
+        ctx.fillText("DOB: " + userDob, 300, 305);
+        ctx.fillText("Time: " + userTime, 300, 335);
+    </script>
+</body>
+</html>
