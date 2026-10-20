@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ananda Guru - Original Planets Kundali</title>
+    <title>Ananda Guru - Dynamic Original Planets Kundali</title>
     <style>
         body { margin: 0; padding: 0; background-color: #0b0f19; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; }
         #chartContainer { width: 600px; height: 600px; position: relative; box-sizing: border-box; background-image: url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center; border: 4px solid #f59e0b; }
@@ -15,6 +15,8 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        
         const canvas = document.getElementById('kundaliCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -32,48 +34,81 @@
         ctx.moveTo(0, 300); ctx.lineTo(300, 0);
         ctx.stroke();
 
-        // 1 to 12 House Numbers (Gold Color) - Added elegantly at corners
-        ctx.fillStyle = "#fbbf24"; // Gold color
+        // 1 to 12 House Numbers (Gold Color)
+        ctx.fillStyle = "#fbbf24";
         ctx.font = "bold 16px Arial";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        ctx.fillText("1", 300, 60);   // Top Diamond
-        ctx.fillText("2", 120, 40);   // Top Left Triangle
-        ctx.fillText("3", 40, 120);   // Mid Left Outer Triangle
-        ctx.fillText("4", 60, 300);   // Left Diamond
-        ctx.fillText("5", 40, 480);   // Mid Left Bottom Triangle
-        ctx.fillText("6", 120, 560);  // Bottom Left Triangle
-        ctx.fillText("7", 300, 540);  // Bottom Diamond
-        ctx.fillText("8", 480, 560);  // Bottom Right Triangle
-        ctx.fillText("9", 560, 480);  // Mid Right Bottom Triangle
-        ctx.fillText("10", 540, 300); // Right Diamond
-        ctx.fillText("11", 560, 120); // Mid Right Top Triangle
-        ctx.fillText("12", 480, 40);  // Top Right Triangle
+        ctx.fillText("1", 300, 60);   ctx.fillText("2", 120, 40);
+        ctx.fillText("3", 40, 120);   ctx.fillText("4", 60, 300);
+        ctx.fillText("5", 40, 480);   ctx.fillText("6", 120, 560);
+        ctx.fillText("7", 300, 540);  ctx.fillText("8", 480, 560);
+        ctx.fillText("9", 560, 480);  ctx.fillText("10", 540, 300);
+        ctx.fillText("11", 560, 120); ctx.fillText("12", 480, 40);
 
-        // మీ ఒరిజినల్ గ్రహాల ఇమేజ్ లింక్స్ మరియు వాటి పర్ఫెక్ట్ సెంటర్ స్థానాలు (X, Y)
+        // 12 గడుల సెంటర్ పాయింట్స్
+        const houseCenters = {
+            1: {x: 300, y: 150}, 2: {x: 150, y: 75}, 3: {x: 75, y: 150},
+            4: {x: 150, y: 300}, 5: {x: 75, y: 450}, 6: {x: 150, y: 525},
+            7: {x: 300, y: 450}, 8: {x: 450, y: 525}, 9: {x: 525, y: 450},
+            10: {x: 450, y: 300}, 11: {x: 525, y: 150}, 12: {x: 450, y: 75}
+        };
+
+        // గ్రహాల ఇమేజ్ లింక్స్ మరియు వాటి హౌస్ నంబర్ (URL నుండి తీసుకుంటుంది)
         const planets = [
-            { url: 'https://i.ibb.co/cKFT5BQ8/surya-png.png', x: 300, y: 150 }, // 1వ ఇల్లు
-            { url: 'https://i.ibb.co/svSx8jxW/chandra-png.png', x: 150, y: 75 },  // 2వ ఇల్లు
-            { url: 'https://i.ibb.co/S4kmV6sc/mangala.png', x: 150, y: 300 },   // 4వ ఇల్లు
-            { url: 'https://i.ibb.co/84dXYS0Q/budha-png.png', x: 75, y: 450 },    // 5వ ఇల్లు
-            { url: 'https://i.ibb.co/TqPBxK7Z/guru-png.png', x: 300, y: 450 },   // 7వ ఇల్లు
-            { url: 'https://i.ibb.co/NgxgvdXf/shukra-png.png', x: 450, y: 525 },  // 8వ ఇల్లు
-            { url: 'https://i.ibb.co/v4vSwZJS/shani.png', x: 450, y: 300 },      // 10వ ఇల్లు
-            { url: 'https://i.ibb.co/23XjGRqH/rahu-png.png', x: 525, y: 150 },    // 11వ ఇల్లు
-            { url: 'https://i.ibb.co/GvzdFxD3/ketu-png.png', x: 450, y: 75 }      // 12వ ఇల్లు
+            { id: 'su', url: 'https://i.ibb.co/cKFT5BQ8/surya-png.png', house: parseInt(urlParams.get('su')) || 1 },
+            { id: 'mo', url: 'https://i.ibb.co/svSx8jxW/chandra-png.png', house: parseInt(urlParams.get('mo')) || 2 },
+            { id: 'ma', url: 'https://i.ibb.co/S4kmV6sc/mangala.png', house: parseInt(urlParams.get('ma')) || 4 },
+            { id: 'me', url: 'https://i.ibb.co/84dXYS0Q/budha-png.png', house: parseInt(urlParams.get('me')) || 5 },
+            { id: 'ju', url: 'https://i.ibb.co/TqPBxK7Z/guru-png.png', house: parseInt(urlParams.get('ju')) || 7 },
+            { id: 've', url: 'https://i.ibb.co/NgxgvdXf/shukra-png.png', house: parseInt(urlParams.get('ve')) || 8 },
+            { id: 'sa', url: 'https://i.ibb.co/v4vSwZJS/shani.png', house: parseInt(urlParams.get('sa')) || 10 },
+            { id: 'ra', url: 'https://i.ibb.co/23XjGRqH/rahu-png.png', house: parseInt(urlParams.get('ra')) || 11 },
+            { id: 'ke', url: 'https://i.ibb.co/GvzdFxD3/ketu-png.png', house: parseInt(urlParams.get('ke')) || 12 }
         ];
 
-        const iconSize = 70;
-
-        // Drawing original planet images perfectly centered
+        let houseGroups = {};
         planets.forEach(p => {
-            let img = new Image();
-            img.crossOrigin = "Anonymous"; 
-            img.src = p.url;
-            img.onload = function() {
-                ctx.drawImage(img, p.x - (iconSize / 2), p.y - (iconSize / 2), iconSize, iconSize); 
-            }
+            if(!houseGroups[p.house]) houseGroups[p.house] = [];
+            houseGroups[p.house].push(p);
+        });
+
+        // ఒకే గదిలో ఎక్కువ గ్రహాలు ఉంటే సర్దుబాటు చేసే లాజిక్ (Smart Overlap)
+        const baseIconSize = 50; 
+        
+        Object.keys(houseGroups).forEach(h => {
+            let hPlanets = houseGroups[h];
+            let center = houseCenters[h];
+            
+            hPlanets.forEach((p, index) => {
+                let offset = {x: 0, y: 0};
+                let total = hPlanets.length;
+                let size = baseIconSize;
+                
+                if (total === 2) {
+                    offset.x = (index === 0) ? -20 : 20;
+                    size = 45;
+                } else if (total === 3) {
+                    if(index === 0) { offset.x = -15; offset.y = -15; }
+                    if(index === 1) { offset.x = 15; offset.y = -15; }
+                    if(index === 2) { offset.x = 0; offset.y = 15; }
+                    size = 40;
+                } else if (total >= 4) {
+                    if(index === 0) { offset.x = -15; offset.y = -15; }
+                    if(index === 1) { offset.x = 15; offset.y = -15; }
+                    if(index === 2) { offset.x = -15; offset.y = 15; }
+                    if(index === 3) { offset.x = 15; offset.y = 15; }
+                    size = 35;
+                }
+
+                let img = new Image();
+                img.crossOrigin = "Anonymous"; 
+                img.src = p.url;
+                img.onload = function() {
+                    ctx.drawImage(img, center.x + offset.x - (size / 2), center.y + offset.y - (size / 2), size, size); 
+                }
+            });
         });
     </script>
 </body>
