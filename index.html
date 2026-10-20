@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ananda Guru - Vedic Kundali Chart</title>
+    <title>Ananda Guru - Space Kundali Chart</title>
     <style>
         body {
             margin: 0;
@@ -17,10 +17,12 @@
         #chartContainer {
             width: 600px;
             height: 600px;
-            background: #111827;
-            border: 4px solid #f59e0b;
             position: relative;
             box-sizing: border-box;
+            background-image: url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 4px solid #f59e0b;
         }
         canvas {
             display: block;
@@ -34,61 +36,69 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name') ? decodeURIComponent(urlParams.get('name')) : 'BURIDI VIKASH RAJU';
+        const userDob = urlParams.get('dob') ? decodeURIComponent(urlParams.get('dob')) : '12-03-2003';
+        const userTime = urlParams.get('time') ? decodeURIComponent(urlParams.get('time')) : '10:30 AM';
+
         const canvas = document.getElementById('kundaliCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Background & Outer Border
-        ctx.fillStyle = "#0f172a";
-        ctx.fillRect(0, 0, 600, 600);
+        // North Indian Chart Diagonal Lines (White/Transparent style)
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(0, 0, 600, 600);
 
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 4;
-        ctx.strokeRect(10, 10, 580, 580);
-
-        // North Indian Chart Diagonal Lines
         ctx.beginPath();
-        ctx.moveTo(10, 10); ctx.lineTo(590, 590);
-        ctx.moveTo(590, 10); ctx.lineTo(10, 590);
+        ctx.moveTo(0, 0); ctx.lineTo(600, 600);
+        ctx.moveTo(600, 0); ctx.lineTo(0, 600);
         
-        ctx.moveTo(300, 10); ctx.lineTo(590, 300);
-        ctx.moveTo(590, 300); ctx.lineTo(300, 590);
-        ctx.moveTo(300, 590); ctx.lineTo(10, 300);
-        ctx.moveTo(10, 300); ctx.lineTo(300, 10);
-        
-        ctx.strokeStyle = "#38bdf8";
-        ctx.lineWidth = 2;
+        ctx.moveTo(300, 0); ctx.lineTo(600, 300);
+        ctx.moveTo(600, 300); ctx.lineTo(300, 600);
+        ctx.moveTo(300, 600); ctx.lineTo(0, 300);
+        ctx.moveTo(0, 300); ctx.lineTo(300, 0);
         ctx.stroke();
 
-        // House Numbers (1 to 12)
-        ctx.fillStyle = "#fbbf24";
-        ctx.font = "bold 15px Arial";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        
-        ctx.fillText("1", 300, 85);
-        ctx.fillText("2", 100, 50);
-        ctx.fillText("3", 50, 100);
-        ctx.fillText("4", 170, 300);
-        ctx.fillText("5", 50, 500);
-        ctx.fillText("6", 100, 550);
-        ctx.fillText("7", 300, 515);
-        ctx.fillText("8", 500, 550);
-        ctx.fillText("9", 550, 500);
-        ctx.fillText("10", 430, 300);
-        ctx.fillText("11", 550, 100);
-        ctx.fillText("12", 500, 50);
+        // Center User Name and Details (Just like your reference image)
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+        ctx.fillRect(120, 230, 360, 120);
 
-        // Planet Icons / Abbreviations (గ్రహాల గుర్తులు)
         ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(userName, 300, 270);
+
+        ctx.fillStyle = "#fbbf24";
         ctx.font = "bold 14px Arial";
-        
-        ctx.fillText("As", 300, 125);     // 1వ ఇల్లు (లగ్నం)
-        ctx.fillText("Ke", 480, 70);     // 12వ ఇల్లు
-        ctx.fillText("Sy", 110, 300);    // 4వ ఇల్లు (సూర్యుడు)
-        ctx.fillText("Ju, Me", 430, 340); // 10వ ఇల్లు (గురు, బుధ)
-        ctx.fillText("Ve", 510, 480);    // 8వ ఇల్లు (శుక్రుడు)
-        ctx.fillText("Ra", 110, 480);    // 6వ ఇల్లు (రాహువు)
-        ctx.fillText("Sa", 300, 465);    // 7వ ఇల్లు (శని)
+        ctx.fillText("DOB: " + userDob + "   TIME: " + userTime, 300, 315);
+
+        // Drawing Planet Circles/Icons inside houses
+        function drawPlanetIcon(x, y, color, label) {
+            ctx.beginPath();
+            ctx.arc(x, y, 22, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#ffffff";
+            ctx.stroke();
+
+            ctx.fillStyle = "#000000";
+            ctx.font = "bold 12px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(label, x, y);
+        }
+
+        // Placing planet icons across houses matching your second image style
+        drawPlanetIcon(300, 90, "#f97316", "As");   // Sun/Lagna
+        drawPlanetIcon(150, 75, "#eab308", "Ju");   // Jupiter
+        drawPlanetIcon(450, 75, "#a855f7", "Sa");   // Saturn
+        drawPlanetIcon(530, 180, "#ef4444", "Ma");  // Mars
+        drawPlanetIcon(75, 230, "#94a3b8", "Mo");   // Moon
+        drawPlanetIcon(530, 420, "#38bdf8", "Ve");  // Venus
+        drawPlanetIcon(75, 480, "#22c55e", "Sy");   // Sun
+        drawPlanetIcon(300, 525, "#64748b", "Ke");  // Ketu
+        drawPlanetIcon(450, 525, "#3b82f6", "Ra");  // Rahu
     </script>
 </body>
 </html>
